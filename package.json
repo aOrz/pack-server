@@ -5,7 +5,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=local DEBUG=demo node --harmony app.js",
     "dev": "cross-env NODE_ENV=local DEBUG=demo supervisor --harmony -w . -i mods,log,node_modules,.git app.js",
-    "test": "mocha --harmony"
+    "test": "mocha --harmony",
+    "test:branch": "node test/site-branch-regression.js"
   },
   "dependencies": {
     "co": "~4.6.0",
