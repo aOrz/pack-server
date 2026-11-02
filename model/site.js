@@ -18,10 +18,11 @@ class initCode {
     data.branch = data.branch?data.branch:'master';
     shell.cd(data.pname);
     let str = shell.exec('git branch');
-    let reg = new RegExp(data.branch,'g');
-    if (reg.test(str.stdout)) {
-      let reg = new RegExp('\\*\\s' + data.branch,'g');
-      if (reg.test(str.stdout)) {
+    const branches = str.stdout.split(/\r?\n/).map(line => line.trim());
+    const currentBranch = branches.find(line => line.indexOf('* ') === 0);
+    const branchNames = branches.map(line => line.replace(/^[*+]\s+/, ''));
+    if (branchNames.indexOf(data.branch) !== -1) {
+      if (currentBranch !== '* ' + data.branch) {
         shell.exec(`git checkout ${data.branch}`);
       }
       shell.exec(`git pull origin ${data.branch}`);
